@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- PWA / Fullscreen mobile -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Nova">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <title>Nova — Não é sobre postar. É sobre posicionar.</title>
+    <link rel="stylesheet" href="styles.css?v=61">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <filter id="liquid-glass-filter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.02" numOctaves="2" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="20"/>
+  </filter>
+</svg>
+
+    <!-- SVG Filters -->
+    <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+        <defs>
+            <filter id="liquid-glass-filter" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="3" seed="6" result="noise"/>
+                <feGaussianBlur in="noise" stdDeviation="1.5" result="softNoise"/>
+                <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="14" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+                <feGaussianBlur in="displaced" stdDeviation="16" result="blurred"/>
+                <feComposite in="blurred" in2="SourceGraphic" operator="in"/>
+            </filter>
+        </defs>
+    </svg>
+    <!-- Intro Animation Overlay -->
+    <div id="intro-overlay">
+        <canvas id="intro-canvas"></canvas>
+    </div>
+    <!-- Custom Cursor -->
+    <div id="cursor-cross">
+        <div class="cursor-h"></div>
+        <div class="cursor-v"></div>
+    </div>
+    <canvas id="cursor-trail"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-logo" id="nav-logo">
+            <a href="javascript:location.reload()"><img src="Logo empresa.png" alt="logo"></a>
+        </div>
+
+        <div class="nav-pill" id="nav-pill">
+            <ul class="nav-links">
+                <li><a href="#hero">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#equipe">Equipe</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#portfolio">Portfólio</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+            <a class="btn-orcamento" id="btn-orcamento" href="https://wa.me/5551994396693?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Nova%20Marketing.%20Quero%20entender%20como%20voc%C3%AAs%20podem%20estruturar%20o%20Instagram%20da%20minha%20empresa%20para%20gerar%20mais%20visibilidade%20e%20autoridade." target="_blank" rel="noopener">
+                <span class="btn-inner">Whatsapp</span>
+            </a>
+            <!-- Botão WhatsApp compacto — visível só no mobile -->
+            <a class="nav-wa-mobile" href="https://wa.me/5551994396693?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Nova%20Marketing.%20Quero%20entender%20como%20voc%C3%AAs%20podem%20estruturar%20o%20Instagram%20da%20minha%20empresa%20para%20gerar%20mais%20visibilidade%20e%20autoridade." target="_blank" rel="noopener" aria-label="WhatsApp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+            </a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile-menu" id="nav-mobile-menu">
+        <ul class="nav-mobile-links">
+            <li><a href="#hero">Início</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#equipe">Equipe</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#portfolio">Portfólio</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+        <a class="nav-mobile-cta" href="https://wa.me/5551994396693?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Nova%20Marketing.%20Quero%20entender%20como%20voc%C3%AAs%20podem%20estruturar%20o%20Instagram%20da%20minha%20empresa%20para%20gerar%20mais%20visibilidade%20e%20autoridade." target="_blank" rel="noopener">Fazer orçamento</a>
+    </div>
+
+    <!-- Background global fixo -->
+    <div class="site-bg">
+        <img src="Background site.png" alt="" id="hero-bg-img">
+    </div>
+
+    <!-- Orb global fixo -->
+    <div class="hero-orb-wrapper">
+        <div class="hero-orb">
+            <div class="orb-inner"></div>
+            <div class="orb-glow"></div>
+            <div class="orb-ring orb-ring-1"></div>
+            <div class="orb-ring orb-ring-2"></div>
+            <div class="orb-ring orb-ring-3"></div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+
+        <div class="hero-bg-img">
+            <img src="teste 2.png" alt="">
+        </div>
+
+        <p id="hero-welcome">bem vindo</p>
+
+        <div class="scroll-indicator" id="scroll-indicator">
+            <div class="mouse-icon">
+                <div class="mouse-wheel"></div>
+            </div>
+            <svg class="hand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+                <rect width="256" height="256" fill="none"/>
+                <path d="M42.68,142a20,20,0,0,1,34.64-20L96,152V44a20,20,0,0,1,40,0v56a20,20,0,0,1,40,0v16a20,20,0,0,1,40,0v36a80,80,0,0,1-80,80C91.82,232,80.19,208,42.68,142Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre">
+        <div class="sobre-content">
+            <div class="sobre-paragraphs">
+                <div class="text-container" style="--delay: 0">
+                    <p class="text" aria-hidden="true">Somos uma empresa especializada em marketing digital e produção de conteúdo, unindo criatividade, estratégia e organização para gerar resultados consistentes aos nossos clientes. Nosso propósito é construir marcas fortes e confiáveis, transmitindo a mensagem certa para o público certo de forma clara e impactante.</p>
+                    <div aria-hidden="true" class="dupe dupe--hide"><div class="dupe__content">Somos uma empresa especializada em marketing digital e produção de conteúdo, unindo criatividade, estratégia e organização para gerar resultados consistentes aos nossos clientes. Nosso propósito é construir marcas fortes e confiáveis, transmitindo a mensagem certa para o público certo de forma clara e impactante.</div></div>
+                    <div class="dupe dupe--reveal"><div class="dupe__content">Somos uma empresa especializada em marketing digital e produção de conteúdo, unindo criatividade, estratégia e organização para gerar resultados consistentes aos nossos clientes. Nosso propósito é construir marcas fortes e confiáveis, transmitindo a mensagem certa para o público certo de forma clara e impactante.</div></div>
+                </div>
+                <div class="text-container" style="--delay: 0.49">
+                    <p class="text" aria-hidden="true">Contamos com uma equipe multidisciplinar que combina produção audiovisual de alta qualidade, gestão e organização estratégica, além do desenvolvimento de roteiros e conteúdos voltados especialmente para negócios que buscam se destacar no mercado.</p>
+                    <div aria-hidden="true" class="dupe dupe--hide"><div class="dupe__content">Contamos com uma equipe multidisciplinar que combina produção audiovisual de alta qualidade, gestão e organização estratégica, além do desenvolvimento de roteiros e conteúdos voltados especialmente para negócios que buscam se destacar no mercado.</div></div>
+                    <div class="dupe dupe--reveal"><div class="dupe__content">Contamos com uma equipe multidisciplinar que combina produção audiovisual de alta qualidade, gestão e organização estratégica, além do desenvolvimento de roteiros e conteúdos voltados especialmente para negócios que buscam se destacar no mercado.</div></div>
+                </div>
+                <div class="text-container" style="--delay: 0.98">
+                    <p class="text" aria-hidden="true">Nosso diferencial está em alinhar profissionalismo, proximidade e inovação, oferecendo soluções completas que vão desde a identidade visual e criação de campanhas até a produção de vídeos e a gestão de conteúdo para redes sociais.</p>
+                    <div aria-hidden="true" class="dupe dupe--hide"><div class="dupe__content">Nosso diferencial está em alinhar profissionalismo, proximidade e inovação, oferecendo soluções completas que vão desde a identidade visual e criação de campanhas até a produção de vídeos e a gestão de conteúdo para redes sociais.</div></div>
+                    <div class="dupe dupe--reveal"><div class="dupe__content">Nosso diferencial está em alinhar profissionalismo, proximidade e inovação, oferecendo soluções completas que vão desde a identidade visual e criação de campanhas até a produção de vídeos e a gestão de conteúdo para redes sociais.</div></div>
+                </div>
+            </div>
+            <div class="text-container sobre-tagline-container" style="--delay: 1.47">
+                <p class="text sobre-tagline" aria-hidden="true">Criamos, organizamos e entregamos.</p>
+                <div aria-hidden="true" class="dupe dupe--hide"><div class="dupe__content sobre-tagline">Criamos, organizamos e entregamos.</div></div>
+                <div class="dupe dupe--reveal"><div class="dupe__content sobre-tagline">Criamos, organizamos e entregamos.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipe -->
+    <section id="equipe">
+        <div class="equipe-cards">
+            <div class="equipe-card" data-index="0">
+                <div class="card-img-wrap">
+                    <img src="wilian.png" alt="">
+                </div>
+            </div>
+            <div class="equipe-card" data-index="1">
+                <div class="card-img-wrap">
+                    <img src="nathan.png" alt="">
+                </div>
+            </div>
+            <div class="equipe-card" data-index="2">
+                <div class="card-img-wrap">
+                    <img src="pedro.png" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos">
+        <div class="servicos-lava" aria-hidden="true">
+            <div class="lava-blob lava-blob-1"></div>
+            <div class="lava-blob lava-blob-2"></div>
+            <div class="lava-blob lava-blob-3"></div>
+            <div class="lava-blob lava-blob-4"></div>
+            <div class="lava-blob lava-blob-5"></div>
+        </div>
+        <div class="servicos-content">
+            <h2 class="servicos-titulo" id="servicos-titulo">O que nos diferencia</h2>
+            <div class="servicos-cards">
+                <div class="servico-card">
+                    <span class="servico-num">01</span>
+                    <h3 class="servico-card-titulo">Planejamento estratégico</h3>
+                    <p class="servico-card-texto">Aqui o marketing não é aposta, é plano.</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-num">02</span>
+                    <h3 class="servico-card-titulo">Criação personalizada</h3>
+                    <p class="servico-card-texto">Identidade visual, conteúdo e comunicação que refletem quem você é.</p>
+                </div>
+                <div class="servico-card">
+                    <span class="servico-num">03</span>
+                    <h3 class="servico-card-titulo">Transparência e proximidade</h3>
+                    <p class="servico-card-texto">Trabalhamos lado a lado, mantendo você sempre no controle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lista de Serviços -->
+    <section id="lista-servicos">
+        <div class="ls-bg"><img src="Background site.png" alt=""></div>
+        <div class="ls-sticky">
+            <div class="ls-frase-wrap">
+                <h2 class="ls-frase">
+                    <span class="ls-line ls-line-desktop">Como vamos atuar</span>
+                    <span class="ls-line ls-line-desktop">na sua empresa</span>
+                    <span class="ls-line ls-line-mobile">Como vamos</span>
+                    <span class="ls-line ls-line-mobile">atuar na sua</span>
+                    <span class="ls-line ls-line-mobile">empresa</span>
+                </h2>
+            </div>
+            <div class="ls-mouse-wrap">
+                <div class="ls-mouse-icon"><div class="ls-mouse-wheel"></div></div>
+            </div>
+            <div class="ls-cards-wrap">
+                <div class="ls-col ls-col-left">
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Gestão de Redes Sociais</span></div>
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Estratégia de Marketing</span></div>
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Desenvolvimento de Conteúdo</span></div>
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Calendário Editorial</span></div>
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Site ideal para sua empresa</span></div>
+                </div>
+                <div class="ls-col ls-col-right">
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Relatório de Desempenho</span></div>
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Gestão de Tráfego Pago Meta</span></div>
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Gestão de Tráfego Pago ADS</span></div>
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Artes pensadas para sua marca</span></div>
+                    <div class="ls-card"><span class="ls-icon">✦</span><span class="ls-nome">Vídeos elaborados para entregar a melhor qualidade</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfólio -->
+    <section id="portfolio">
+        <div class="pf-viewport" id="pf-viewport">
+            <div class="pf-track" id="pf-track">
+                <div class="pf-card"><div class="pf-media"><video src="Video 1_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+                <div class="pf-card"><div class="pf-media"><img src="Foto 1.png" alt=""></div></div>
+                <div class="pf-card pf-mobile-hidden"><div class="pf-media"><img src="Foto 2.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media"><video src="Video 2_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+                <div class="pf-card"><div class="pf-media"><img src="Foto 3.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media pf-foto4"><img src="versao pc 4.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media pf-top"><video src="video 3_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+                <div class="pf-card"><div class="pf-media"><img src="Foto 5.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media pf-foto6"><img src="Foto 6.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media pf-top"><video src="video 4_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+                <div class="pf-card"><div class="pf-media"><img src="Foto 7.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media"><img src="Foto 8.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media"><video src="video 5_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+                <div class="pf-card"><div class="pf-media pf-foto9"><img src="Foto 9.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media"><img src="Foto 10.png" alt=""></div></div>
+                <div class="pf-card"><div class="pf-media pf-top"><video src="video 6_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+                <div class="pf-card"><div class="pf-media pf-top"><video src="videop 7_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+                <div class="pf-card"><div class="pf-media"><video src="video 8_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+                <div class="pf-card"><div class="pf-media"><video src="video 9_web.mp4" muted loop playsinline preload="metadata"></video></div></div>
+            </div>
+            <div class="pf-arrows" id="pf-arrows" aria-hidden="true">
+                <button class="pf-arrow pf-arrow--prev" id="pf-arrow-prev" aria-label="Anterior">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 14L6 9l5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="pf-arrow pf-arrow--next" id="pf-arrow-next" aria-label="Próximo">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+            <div class="pf-scrubber" id="pf-scrubber">
+                <div class="pf-scrubber-fill" id="pf-scrubber-fill"></div>
+                <div class="pf-scrubber-thumb" id="pf-scrubber-thumb"></div>
+            </div>
+            <div class="pf-nav-btns">
+                <a class="pf-down-btn" href="#lista-servicos" data-scroll-skip>subir</a>
+                <a class="pf-down-btn" href="#contato" data-scroll-skip>descer</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato">
+        <div class="ct-bg"><img src="background.png" alt=""></div>
+        <div class="ct-sticky">
+            <div class="ct-card">
+                <div class="ct-info">
+                    <a class="ct-item" href="mailto:novaamkt@gmail.com">
+                        <span class="ct-label">Email</span>
+                        <span class="ct-value">novaamkt@gmail.com</span>
+                    </a>
+                    <div class="ct-item">
+                        <span class="ct-label">Telefone</span>
+                        <div class="ct-phone-row">
+                            <span class="ct-value">+55 51 994396693</span>
+                            <span class="ct-subtitle">fale diretamente com um de nossos sócios</span>
+                        </div>
+                    </div>
+                    <a class="ct-item" href="https://instagram.com/novaamkt" target="_blank" rel="noopener">
+                        <span class="ct-label">Instagram</span>
+                        <span class="ct-value ct-insta">@novaamkt</span>
+                    </a>
+                </div>
+                <a class="ct-btn" href="https://wa.me/5551994396693?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Nova%20Marketing.%20Quero%20entender%20como%20voc%C3%AAs%20podem%20estruturar%20o%20Instagram%20da%20minha%20empresa%20para%20gerar%20mais%20visibilidade%20e%20autoridade." target="_blank" rel="noopener">
+                    Fazer orçamento gratuito
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer id="rodape">
+        <div class="footer-bottom">
+            <img src="Logo empresa.png" alt="Nova Marketing" class="footer-bottom-logo">
+            <span>© 2026 Nova Marketing. Todos os direitos reservados.</span>
+        </div>
+    </footer>
+
+    <!-- Filtro SVG para o glow dos cards de equipe -->
+    <svg class="sr-only" style="overflow:visible!important;position:absolute;width:0;height:0" xmlns="http://www.w3.org/2000/svg">
+        <filter id="equipe-blur" width="500%" height="500%" x="-200%" y="-200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
+        </filter>
+    </svg>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- Lenis smooth scroll -->
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script src="script.js?v=61"></script>
+</body>
+</html>
